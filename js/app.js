@@ -4,3 +4,31 @@ const nameContainer = document.querySelector(".main__profile-name");
 const unContainer = document.querySelector(".main__profile-username");
 const reposContainer = document.querySelector(".main__profile-repos");
 const urlContainer = document.querySelector(".main__profile-url");
+
+//TO DO: add github tokens
+const client_id = "";
+const client_secret = "";
+
+searchButton.addEventListener("click", () =>{
+    console.log("Hello world");
+})
+
+const fetchUsers = async(user) => {
+    const api_call = await fetch(`https://api.github.com/users/${user}?client_id=${client_id}&
+    client_secret=${client_secret}`);
+
+    const data = await api_call.json();
+    return { data }; // {data : data}
+}
+
+const showData = () => {
+    fetchUsers(inputValue.value).then((res) =>{
+    //console.log(res)
+
+    nameContainer.innerHTML = `Name: <span class="main__profile-value">${res.data.name}<span>`;
+    unContainer.innerHTML = `Username: <span class="main__profile-value">${res.data.login}<span>`;
+    reposContainer.innerHTML = `Repos: <span class="main__profile-value">${res.data.public_repos}<span>`;
+    urlContainer.innerHTML = `URL: <span class="main__profile-value">${res.data.html_url}<span>`;
+
+    })
+}
